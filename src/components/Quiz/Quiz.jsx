@@ -1,30 +1,27 @@
-import { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { quizzes } from "../../data";
 
 export default function Quiz() {
-  const { id, q } = useParams();
+  const { id, q } = useParams();        
   const navigate = useNavigate();
   const quiz = quizzes[id];
 
-  if (!quiz) return <h2 style={{ maxWidth: 700, margin: "0 auto", padding: 16 }}>Quiz nicht gefunden: {id}</h2>;
-
+  if (!quiz) return <h2>Quiz nicht gefunden: {id}</h2>;
   const questions = quiz.questions || [];
-  if (!questions.length) {
-    return (
-      <div style={{ maxWidth: 700, margin: "0 auto", padding: 16 }}>
-        <h2>{quiz.title}</h2>
-        <p>Keine Fragen vorhanden.</p>
-        <Link to="/">Zur Startseite</Link>
-      </div>
-    );
-  }
+  if (!questions.length) return <h2>Keine Fragen für: {quiz.title}</h2>;
 
   const index = clamp(parseInt(q ?? "0", 10), 0, questions.length - 1);
   const current = questions[index];
 
   const [inputValue, setInputValue] = useState("");
   const [selected, setSelected] = useState(null);
+
+  useEffect(() => {
+    setInputValue("");
+    setSelected(null);
+    if (q === undefined) navigate(`/quiz/${id}/0`, { replace: true });
+  }, [id, q, navigate]);
 
   const next = () => {
     const nextIndex = index + 1;
@@ -50,7 +47,7 @@ export default function Quiz() {
         />
       ) : (
         <ul style={{ listStyle: "none", padding: 0 }}>
-          {(current.answers || []).map((a) => (
+          {(current.answers || []).map(a => (
             <li key={a.id} style={{ marginBottom: 8 }}>
               <label style={{ cursor: "pointer" }}>
                 <input
