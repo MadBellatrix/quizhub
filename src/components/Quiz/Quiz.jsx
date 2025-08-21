@@ -17,6 +17,7 @@ export default function Quiz() {
   const [inputValue, setInputValue] = useState("");
   const [selected, setSelected] = useState(null);
   const [timer, setTimer] = useState(10);
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
     setInputValue("");
@@ -24,14 +25,13 @@ export default function Quiz() {
 
     if (q === undefined) navigate(`/quiz/${id}/${mode}/0`, { replace: true });
 
-
     if (mode === "time") {
-      setTimer(10); 
+      setTimer(10);
       const interval = setInterval(() => {
         setTimer((t) => {
           if (t <= 1) {
             clearInterval(interval);
-            next(); 
+            next();
             return 10;
           }
           return t - 1;
@@ -41,7 +41,18 @@ export default function Quiz() {
     }
   }, [id, q, mode, navigate]);
 
+  function isAnswerCorrect(question, { selected, inputValue }) {
+    if (question.type === "input") {
+      return String(inputValue ?? "").trim().toLowerCase() === String(question.answer ?? "").trim().toLowerCase();
+    }
+    const correctId = (question.answers || []).find(a => a.correct)?.id;
+    return selected === correctId;
+  }
+
   const next = () => {
+    const correctNow = isAnswerCorrect(current, { selected, inputValue });
+    if (mode === "score" && correctNow) setScore(s => s + 1);
+
     const nextIndex = index + 1;
     if (nextIndex < questions.length) {
       navigate(`/quiz/${id}/${mode}/${nextIndex}`);
@@ -54,8 +65,8 @@ export default function Quiz() {
     <div style={{ maxWidth: 700, margin: "0 auto", padding: 16 }}>
       <h2>{quiz.title} ({mode})</h2>
       <p>Frage {index + 1} / {questions.length}</p>
-
       {mode === "time" && <p>Verbleibende Zeit: {timer} Sekunden</p>}
+      {mode === "score" && <p>Aktueller Score: {score}</p>}
 
       <p style={{ fontSize: 18 }}>{current.question}</p>
 
