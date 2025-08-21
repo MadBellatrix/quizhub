@@ -59,7 +59,8 @@ export default function Quiz() {
     } else {
       if (mode !== "practice") {
         const finalScore = mode === "score" ? (correctNow ? score + 1 : score) : 0;
-        addHighscore({ quizId: id, mode, name: "", score: finalScore, total: questions.length });
+        const name = window.prompt("Name für die Highscore-Liste:");
+        addHighscore({ quizId: id, mode, name, score: finalScore, total: questions.length });
         navigate("/highscores", { replace: true });
         return;
       }
@@ -104,6 +105,7 @@ export default function Quiz() {
       <div style={{ marginTop: 12, display: "flex", gap: 8 }}>
         <button onClick={next}>Weiter</button>
         <Link to="/">Zur Startseite</Link>
+        <Link to="/highscores">Highscores</Link>
       </div>
     </div>
   );
