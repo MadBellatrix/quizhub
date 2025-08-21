@@ -1,4 +1,3 @@
-// src/pages/HighscoresPage.jsx
 import { quizzes, loadHighscores } from "../data";
 
 const MODES = [
@@ -18,20 +17,34 @@ export default function HighscoresPage() {
           <h3>{qmeta.title}</h3>
 
           {MODES.map((m) => {
-            const rows = loadHighscores(qid, m.id);
+            const rows = loadHighscores(qid, m.id).slice(0, 10);
             return (
               <div key={`${qid}-${m.id}`}>
                 <h4>{m.name}</h4>
+
                 {rows.length === 0 ? (
                   <p>Noch keine Einträge.</p>
                 ) : (
-                  <ul>
-                    {rows.map((r, i) => (
-                      <li key={i}>
-                        {i + 1}. {r.name} – {r.score} / {r.total} – {new Date(r.date).toLocaleString()}
-                      </li>
-                    ))}
-                  </ul>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Score</th>
+                        <th>Datum</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {rows.map((r, i) => (
+                        <tr key={i}>
+                          <td>{i + 1}</td>
+                          <td>{r.name}</td>
+                          <td>{r.score} / {r.total}</td>
+                          <td>{new Date(r.date).toLocaleString()}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 )}
               </div>
             );
