@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { quizzes } from "../../data";
 
 export default function Quiz() {
-  const { id, q } = useParams();        
+  const { id, mode, q } = useParams();
   const navigate = useNavigate();
   const quiz = quizzes[id];
 
@@ -16,17 +16,35 @@ export default function Quiz() {
 
   const [inputValue, setInputValue] = useState("");
   const [selected, setSelected] = useState(null);
+  const [timer, setTimer] = useState(10);
 
   useEffect(() => {
     setInputValue("");
     setSelected(null);
-    if (q === undefined) navigate(`/quiz/${id}/0`, { replace: true });
-  }, [id, q, navigate]);
+
+    if (q === undefined) navigate(`/quiz/${id}/${mode}/0`, { replace: true });
+
+
+    if (mode === "time") {
+      setTimer(10); 
+      const interval = setInterval(() => {
+        setTimer((t) => {
+          if (t <= 1) {
+            clearInterval(interval);
+            next(); 
+            return 10;
+          }
+          return t - 1;
+        });
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [id, q, mode, navigate]);
 
   const next = () => {
     const nextIndex = index + 1;
     if (nextIndex < questions.length) {
-      navigate(`/quiz/${id}/${nextIndex}`);
+      navigate(`/quiz/${id}/${mode}/${nextIndex}`);
     } else {
       navigate("/", { replace: true });
     }
@@ -34,8 +52,10 @@ export default function Quiz() {
 
   return (
     <div style={{ maxWidth: 700, margin: "0 auto", padding: 16 }}>
-      <h2>{quiz.title}</h2>
+      <h2>{quiz.title} ({mode})</h2>
       <p>Frage {index + 1} / {questions.length}</p>
+
+      {mode === "time" && <p>Verbleibende Zeit: {timer} Sekunden</p>}
 
       <p style={{ fontSize: 18 }}>{current.question}</p>
 
