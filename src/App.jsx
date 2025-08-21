@@ -5,6 +5,7 @@ import Homepage from './pages/Homepage'
 import Contact from './pages/Contact'
 import Footer from './components/Footer'
 import Quiz from './components/Quiz/Quiz'
+import HighscoresPage from './pages/HighscoresPage'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 function App() {
