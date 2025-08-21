@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { quizzes } from "../../data";
+import { quizzes, addHighscore } from "../../data";
 
 export default function Quiz() {
   const { id, mode, q } = useParams();
@@ -57,6 +57,12 @@ export default function Quiz() {
     if (nextIndex < questions.length) {
       navigate(`/quiz/${id}/${mode}/${nextIndex}`);
     } else {
+      if (mode !== "practice") {
+        const finalScore = mode === "score" ? (correctNow ? score + 1 : score) : 0;
+        addHighscore({ quizId: id, mode, name: "", score: finalScore, total: questions.length });
+        navigate("/highscores", { replace: true });
+        return;
+      }
       navigate("/", { replace: true });
     }
   };
