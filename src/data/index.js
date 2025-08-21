@@ -1,6 +1,7 @@
 import math from "./quizzes/math";
 import fantasy from "./quizzes/fantasy";
 import words from "./quizzes/words"; 
+import { addHighscore, loadHighscores } from "./highscores";    
 
 export const quizzes = {
     fantasy: { title: "Fantasy Quiz", questions: fantasy },
