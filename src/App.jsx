@@ -16,6 +16,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/quiz/:id" element={<Quiz />} />
         <Route path="/quiz/:id/:mode/:q" element={<Quiz />} />
+        <Route path="/highscores" element={<HighscoresPage />} />
       </Routes>
       <Footer />
     </Router>

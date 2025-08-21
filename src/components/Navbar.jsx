@@ -11,6 +11,9 @@ export default function Navbar() {
                 <li>
                     <Link to="/contact">Kontakt</Link>
                 </li>
+                <li>
+                    <Link to="/highscores">Highscores</Link>
+                </li>
             </ul>
         </nav>
     )
