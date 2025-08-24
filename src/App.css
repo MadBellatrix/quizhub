@@ -1,0 +1,42 @@
+:root {
+	--earth-bg: #f3ede4;
+	--earth-dark: #3e2c18;
+	--earth-mid: #a68a64;
+	--earth-light: #e2c9a0;
+	--earth-accent: #bfa980;
+	--earth-green: #7c8b5c;
+}
+
+body {
+	margin: 0;
+	font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+	background-color: var(--earth-bg);
+	color: var(--earth-dark);
+	min-height: 100vh;
+}
+
+.App {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	background: var(--earth-bg);
+}
+
+main {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 2rem 1rem;
+}
+
+a {
+	color: var(--earth-green);
+	text-decoration: none;
+	transition: color 0.2s;
+}
+a:hover {
+	color: var(--earth-dark);
+}
