@@ -1,4 +1,3 @@
-// src/pages/HighscoresPage.jsx
 import { quizzes, loadHighscores } from "../data";
 
 const MODES = [
@@ -10,50 +9,50 @@ export default function HighscoresPage() {
   const quizEntries = Object.entries(quizzes);
 
   return (
-    <div style={{ maxWidth: 900, margin: "0 auto", padding: 16 }}>
-      <h2>Highscores</h2>
+    <div className="max-w-4xl mx-auto px-6 py-10">
+      <h2 className="text-3xl font-bold text-amber-900 mb-8 text-center tracking-wide">Highscores</h2>
 
       {quizEntries.map(([qid, qmeta]) => (
-        <section key={qid} style={{ marginBottom: 24 }}>
-          <h3 style={{ marginBottom: 8 }}>{qmeta.title}</h3>
+        <section key={qid} className="mb-10">
+          <h3 className="text-xl font-semibold text-amber-800 mb-3">{qmeta.title}</h3>
 
           {MODES.map((m) => {
             const rows = loadHighscores(qid, m.id).slice(0, 10);
             return (
               <div
                 key={`${qid}-${m.id}`}
-                style={{ border: "1px solid #ddd", borderRadius: 12, padding: 12, marginBottom: 12 }}
+                className="border border-amber-200 rounded-xl bg-amber-50 shadow p-4 mb-4"
               >
-                <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-                  <h4 style={{ margin: 0 }}>{m.name}</h4>
-                  <small style={{ opacity: 0.7, marginLeft: 6 }}>{qid} / {m.id}</small>
+                <div className="flex items-baseline gap-3 mb-2">
+                  <h4 className="text-lg font-medium text-lime-700 m-0">{m.name}</h4>
+                  <small className="opacity-70 ml-2 text-xs">{qid} / {m.id}</small>
                 </div>
 
                 {rows.length === 0 ? (
-                  <p style={{ opacity: 0.8 }}>Noch keine Einträge.</p>
+                  <p className="opacity-80 text-amber-900">Noch keine Einträge.</p>
                 ) : (
-                  <table style={{ width: "100%", borderCollapse: "collapse", marginTop: 8 }}>
-                    <thead>
-                      <tr>
-                        <th style={{ textAlign: "left", borderBottom: "1px solid #eee", padding: "6px 4px" }}>#</th>
-                        <th style={{ textAlign: "left", borderBottom: "1px solid #eee", padding: "6px 4px" }}>Name</th>
-                        <th style={{ textAlign: "right", borderBottom: "1px solid #eee", padding: "6px 4px" }}>Score</th>
-                        <th style={{ textAlign: "right", borderBottom: "1px solid #eee", padding: "6px 4px" }}>Datum</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {rows.map((r, i) => (
-                        <tr key={i}>
-                          <td style={{ padding: "6px 4px" }}>{i + 1}</td>
-                          <td style={{ padding: "6px 4px" }}>{r.name}</td>
-                          <td style={{ padding: "6px 4px", textAlign: "right" }}>{r.score} / {r.total}</td>
-                          <td style={{ padding: "6px 4px", textAlign: "right" }}>
-                            {new Date(r.date).toLocaleString()}
-                          </td>
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-separate border-spacing-y-1 mt-2">
+                      <thead>
+                        <tr className="bg-amber-200 text-amber-900">
+                          <th className="text-left px-2 py-1 rounded-l-lg">#</th>
+                          <th className="text-left px-2 py-1">Name</th>
+                          <th className="text-right px-2 py-1">Score</th>
+                          <th className="text-right px-2 py-1 rounded-r-lg">Datum</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {rows.map((r, i) => (
+                          <tr key={i} className="even:bg-amber-100">
+                            <td className="px-2 py-1">{i + 1}</td>
+                            <td className="px-2 py-1">{r.name}</td>
+                            <td className="px-2 py-1 text-right">{r.score} / {r.total}</td>
+                            <td className="px-2 py-1 text-right">{new Date(r.date).toLocaleString()}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 )}
               </div>
             );
