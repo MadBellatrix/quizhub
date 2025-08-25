@@ -8,3 +8,5 @@ export const quizzes = {
     math: { title: "Mathe (Eingabe)", questions: math },
     words: { title: "Wortschatz Quiz", questions: words }
 };
+
+export { addHighscore, loadHighscores } from "./highscores";

@@ -9,7 +9,7 @@ export default function HighscoresPage() {
   const quizEntries = Object.entries(quizzes);
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-10">
+     <div className="max-w-4xl mx-auto px-6 py-10 pb-24">
       <h2 className="text-3xl font-bold text-amber-900 mb-8 text-center tracking-wide">Highscores</h2>
 
       {quizEntries.map(([qid, qmeta]) => (
